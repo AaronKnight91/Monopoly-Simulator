@@ -32,6 +32,7 @@ class Player():
 
         self.position = 0
         self._passed_go = False
+        self._in_jail = False
 
     def update_position(self, dice_roll):
 
@@ -39,6 +40,12 @@ class Player():
         if self.position % 39 > 0:
             self._pass_go = True
             self.position = self.position % 40
+
+    def go_to_jail(self):
+
+        if self.position == 30:
+            self._in_jail = True
+            self.position = 10
 
     
 def main():
