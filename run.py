@@ -46,6 +46,13 @@ class Player():
             self.earn_money(200)
             self.position = self.position % 40
 
+        # Pay Tax
+        if self.position == 4:
+            self.pay_money(200)
+        # Pay Super Tax
+        if self.position == 38:
+            self.pay_money(100)
+
     def go_to_jail(self):
 
         if self.position == 30:
@@ -73,7 +80,8 @@ class Player():
             self.money -= value
             return True
         else:
-            return False         
+            return False
+
             
 def main():
 
