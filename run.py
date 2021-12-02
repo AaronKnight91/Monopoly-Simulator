@@ -1,3 +1,4 @@
+import pandas as pd
 from random import randint
 
 class DiceRoll():
@@ -82,14 +83,49 @@ class Player():
         else:
             return False
 
+    def buy_property(self, board):
+
+        if self._passed_go:
+            self.pay_money(board.loc[self.position]["Price"])
+
+            return True
+
+        else:
+            return False
+
+class Board():
+
+    def __init__(self):
+
+        self.board = pd.read_csv("board_data_sheet.csv")
+        self.board.set_index("Number", inplace=True)
+        self.board["Owned"] = ""
+
+    def can_be_bought(self, position):
+
+        if self.board.loc[position]["Price"] > 0:
+            return True
+        else:
+            return False
+        
+    def update_owned_status(self, position):
+
+        self.board.loc[position]["Owned"] = True
+        
             
 def main():
 
     player = Player()
-
+    board = Board()
+        
     for i in range(10):
         dice = DiceRoll()
         player.update_position(dice)
+        if board.can_be_bought(player.position):
+            bought = player.buy_property(board)
+
+            if bought:
+                board.update_owned_status(player.position)
 
 if __name__ == "__main__":
     main()
