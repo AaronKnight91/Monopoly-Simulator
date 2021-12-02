@@ -31,6 +31,8 @@ class Player():
 
     def __init__(self):
 
+        self.player_name = ""
+
         self.position = 0
         self._passed_go = False
 
@@ -39,6 +41,10 @@ class Player():
         self._in_jail = False
         self._breakout_attempts = 0
 
+    def get_player_name(self, name):
+
+        self.player_name = name
+        
     def update_position(self, dice):
 
         self.position += dice.roll
@@ -108,24 +114,36 @@ class Board():
         else:
             return False
         
-    def update_owned_status(self, position):
+    def update_owned_status(self, player):
 
-        self.board.loc[position]["Owned"] = True
+        self.board.loc[player.position]["Owned"] = player.player_name
         
             
 def main():
 
-    player = Player()
+    # player = Player()
+    players = setup_players(4)
     board = Board()
         
     for i in range(10):
-        dice = DiceRoll()
-        player.update_position(dice)
-        if board.can_be_bought(player.position):
-            bought = player.buy_property(board)
+        for player in players:
+            dice = DiceRoll()
+            player.update_position(dice)
+            if board.can_be_bought(player.position):
+                bought = player.buy_property(board)
 
-            if bought:
-                board.update_owned_status(player.position)
+                if bought:
+                    board.update_owned_status(player)
+
+def setup_players(num_players):
+
+    players = []
+    for i in range(num_players):
+        player = Player()
+        player.get_player_name("Player %s" % str(i + 1))
+        players.append(player)
+
+    return players
 
 if __name__ == "__main__":
     main()
