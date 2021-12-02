@@ -31,11 +31,13 @@ class Player():
     def __init__(self):
 
         self.position = 0
+        self._passed_go = False
 
     def update_position(self, dice_roll):
 
         self.position += dice_roll
         if self.position % 39 > 0:
+            self._pass_go = True
             self.position = self.position % 40
 
     
