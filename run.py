@@ -105,14 +105,19 @@ class Board():
 
         self.board = pd.read_csv("board_data_sheet.csv")
         self.board.set_index("Number", inplace=True)
-        self.board["Owned"] = ""
+        self.board["Owned"] = "Unowned"
 
-    def can_be_bought(self, position):
+    def can_be_bought(self, player):
 
-        if self.board.loc[position]["Price"] > 0:
+        if self.board.loc[player.position]["Price"] > 0 and self.board.loc[player.position]["Owned"] = "Unowned":
             return True
         else:
             return False
+
+    def check_owned_status(self, player):
+
+        if self.board.loc[player.position]["Price"] > 0:
+            return self.board.loc[player.position]["Owned"]
         
     def update_owned_status(self, player):
 
@@ -124,16 +129,29 @@ def main():
     # player = Player()
     players = setup_players(4)
     board = Board()
+
+    hold_money = {}
+    for player in players:
+        hold_money[player] = 0
         
     for i in range(10):
         for player in players:
             dice = DiceRoll()
             player.update_position(dice)
+            
             if board.can_be_bought(player.position):
                 bought = player.buy_property(board)
 
                 if bought:
                     board.update_owned_status(player)
+
+            else:
+                owned_by = board.can_be_bought(player)
+                if not owned_by == None:
+                    # Pay money
+                    player.pay_money(board.get_rent(player)) # Not yet fully implemented
+                    hold_money[owned_by] += board.get_rent(player) # Not yet implemented
+                
 
 def setup_players(num_players):
 
