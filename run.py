@@ -43,7 +43,7 @@ class Player():
         self.position += dice.roll
         if self.position % 39 > 0:
             self._pass_go = True
-            self.money += 200
+            self.earn_money(200)
             self.position = self.position % 40
 
     def go_to_jail(self):
@@ -63,6 +63,10 @@ class Player():
                     if self.pay_money(50):
                         self._in_jail = False
 
+    def earn_money(self, value):
+
+        self.money += value
+                        
     def pay_money(self, value):
 
         if (self.money - value) > 0:
