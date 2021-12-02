@@ -40,7 +40,7 @@ class Player():
 
     def update_position(self, dice):
 
-        self.position += dice.dice_roll
+        self.position += dice.roll
         if self.position % 39 > 0:
             self._pass_go = True
             self.position = self.position % 40
@@ -64,7 +64,7 @@ class Player():
 
     def pay_money(self, value):
 
-        if self.money -= value > 0:
+        if (self.money - value) > 0:
             self.money -= value
             return True
         else:
