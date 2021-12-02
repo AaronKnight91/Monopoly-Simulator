@@ -59,8 +59,18 @@ class Player():
             else:
                 self._breakout_attempts += 1
                 if self._breakout_attempts == 3:
-                    self.money -= 50
-                    self._in_jail = False
+                    if self.pay_money(50):
+                        self._in_jail = False
+
+    def pay_money(self, value):
+
+        if self.money -= value > 0:
+            self.money -= value
+            return True
+        else:
+            return False
+
+        
 
                 
             
