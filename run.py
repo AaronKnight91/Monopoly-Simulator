@@ -32,11 +32,15 @@ class Player():
 
         self.position = 0
         self._passed_go = False
+
+        self.money = 1500
+        
         self._in_jail = False
+        self._breakout_attempts = 0
 
-    def update_position(self, dice_roll):
+    def update_position(self, dice):
 
-        self.position += dice_roll
+        self.position += dice.dice_roll
         if self.position % 39 > 0:
             self._pass_go = True
             self.position = self.position % 40
@@ -47,14 +51,26 @@ class Player():
             self._in_jail = True
             self.position = 10
 
-    
+    def get_out_of_jail(self, dice):
+
+        if self._in_jail:
+            if dice.double_roll:
+                self._in_jail = False
+            else:
+                self._breakout_attempts += 1
+                if self._breakout_attempts == 3:
+                    self.money -= 50
+                    self._in_jail = False
+
+                
+            
 def main():
 
     player = Player()
 
     for i in range(10):
         dice = DiceRoll()
-        player.update_position(dice.roll)
+        player.update_position(dice)
 
 if __name__ == "__main__":
     main()
