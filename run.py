@@ -141,7 +141,7 @@ def main():
             dice = DiceRoll()
             player.update_position(dice)
             
-            if board.can_be_bought(player.position):
+            if board.can_be_bought(player):
                 bought = player.buy_property(board)
 
                 if bought:
