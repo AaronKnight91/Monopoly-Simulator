@@ -1,6 +1,8 @@
 import pandas as pd
 from random import randint
 
+import cards
+
 class DiceRoll():
 
     def __init__(self):
@@ -109,7 +111,7 @@ class Board():
 
     def can_be_bought(self, player):
 
-        if self.board.loc[player.position]["Price"] > 0 and self.board.loc[player.position]["Owned"] = "Unowned":
+        if (self.board.loc[player.position]["Price"] > 0) and (self.board.loc[player.position]["Owned"] == "Unowned"):
             return True
         else:
             return False
