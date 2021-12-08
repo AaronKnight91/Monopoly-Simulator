@@ -124,6 +124,11 @@ class Board():
     def update_owned_status(self, player):
 
         self.board.loc[player.position]["Owned"] = player.player_name
+
+    def get_rent(self, player):
+
+        # To be implemented
+        return 0
         
             
 def main():
@@ -148,12 +153,12 @@ def main():
                     board.update_owned_status(player)
 
             else:
-                owned_by = board.can_be_bought(player)
-                if not owned_by == None:
+                owned = board.can_be_bought(player)
+                if owned:
                     # Pay money
                     player.pay_money(board.get_rent(player)) # Not yet fully implemented
-                    hold_money[owned_by] += board.get_rent(player) # Not yet implemented
-                
+                    hold_money[board.loc[player.position]["Owned"]] += board.get_rent(player) # Not yet implemented
+
 
 def setup_players(num_players):
 
