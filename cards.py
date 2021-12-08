@@ -17,7 +17,7 @@ class Cards():
     def draw_card(self):
 
         tmp = self.card["Cards"].iloc[0]
-        self.card["Cards"].drop(self.card["Cards"].iloc[0], inplace=True)
+        self.cards["Cards"].drop(self.card["Cards"].iloc[0], inplace=True)
         return tmp
 
     def replace_card(self, card):
@@ -30,7 +30,7 @@ class ChanceCards(Cards):
 
         Cards.__init__(self)
 
-class CommunityChestCards(cards):
+class CommunityChestCards(Cards):
 
     def __init__(self, file):
 
